@@ -1,9 +1,7 @@
 module ApplicationHelper
-
-  def set_title(title = '')
-    page_title = "Desired service"
-    page_title = "#{title}ー#{page_title}"  unless page_title.empty?    
+  def title_tag_set(title = '')
+    page_title = 'Desired service'
+    page_title = "#{title}ー#{page_title}" unless title.empty?
     provide(:title, page_title)
   end
-  
 end
