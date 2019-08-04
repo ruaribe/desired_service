@@ -1,0 +1,23 @@
+<% title_tag_set("#{@user.name}さんのページ")%>
+
+<h1><%= @user.name %>さんのページ</h1>
+<p><%= link_to "登録情報の更新", edit_user_path(@user) %></p>
+
+<table>
+<tr>
+  <th>ユーザー名</th>
+  <td><%= @user.name %></td>
+</tr>
+<tr>
+  <th>メールアドレス</th>
+  <td><%= @user.email %></td>
+</tr>
+<tr>
+  <th>性別</th>
+  <td><%= @user.sex == 0 ? '未設定' : @user.sex == 1 ? '男' : '女' %></td>
+</tr>
+<tr>
+  <th>生年月日</th>
+  <td><%= @user.birthday&.strftime("%Y年%m月%d日") %></td>
+</tr>
+</table>
