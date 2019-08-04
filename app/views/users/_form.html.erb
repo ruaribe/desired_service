@@ -1,0 +1,25 @@
+<%= form_with model: @user, local: true do |form|%>
+<%= render 'shared/error_messages',object: form.object %>
+
+<ul>
+  <li>
+    <%= form.label 'ユーザー名' %>
+    <%= form.text_field :name %>
+  </li>
+  <li>
+    <%= form.label 'メールアドレス' %>
+    <%= form.text_field :email %>
+  </li>
+  <li>
+    <%= form.label '性別' %>
+    <% options = [['未設定', 0],['男', 1],
+  ['女', 2]] %>
+    <%= form.select :sex, options, selected:@user.sex %>
+  </li>
+  <li> <%= form.label '生年月日' %>
+    <%= form.date_select :birthday,
+  start_year: 1940, end_year: Time.current.year,
+  use_month_numbers: true %></li>
+</ul>
+<%= form.submit %>
+<% end %>

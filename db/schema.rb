@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2019_07_17_124526) do
     t.string "name", null: false
     t.string "email", null: false
     t.date "birthday"
-    t.integer "sex"
+    t.integer "sex", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

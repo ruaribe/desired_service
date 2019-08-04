@@ -1,0 +1,10 @@
+<% title_tag_set("会員一覧")%>
+
+<h1>会員一覧</h1>
+<% @users.each do |user| %>
+  <p>
+    <%= link_to user.name, user%>
+    <%= link_to "削除", user, method: :delete, data: { confirm: "本当に削除しますか？" } %>
+  </p>
+<% end %>
+
