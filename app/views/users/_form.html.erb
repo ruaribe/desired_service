@@ -11,6 +11,14 @@
     <%= form.text_field :email %>
   </li>
   <li>
+    <%= form.label :password %>
+    <%= form.password_field :password  %>
+  </li>
+  <li>
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation %>
+  </li>
+  <li>
     <%= form.label '性別' %>
     <% options = [['未設定', 0],['男', 1],
   ['女', 2]] %>

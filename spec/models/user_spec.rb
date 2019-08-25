@@ -1,57 +1,92 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  before do
-    @user = build(:ruaribe)
-  end
-
   describe 'valid' do
-    it 'nameとemailどちらも値が設定されていれば、OK' do
-      expect(@user.valid?).to eq(true)
+    it '有効なパラメータがそろっている場合' do
+      user = build :testuser
+      expect(user.valid?).to eq(true)
     end
 
     it 'nameが空だとNG' do
-      @user.name = ''
-      expect(@user.valid?).to eq(false)
+      user = build :testuser, name: ''
+      expect(user.valid?).to eq(false)
     end
 
     it 'emailが空だとNG' do
-      @user.email = ''
-      expect(@user.valid?).to eq(false)
+      user = build :testuser, email: ''
+      expect(user.valid?).to eq(false)
     end
 
     it 'emailの重複はNG' do
-      @other_user = create(:user)
-      @user.email = 'TEST1@example.com'
-      expect(@user.valid?).to eq(false)
+      create(:user, :sample)
+      user = build :testuser, email: 'sample1@example.com'
+      expect(user.valid?).to eq(false)
     end
 
-    it '名前は50文字まで'do
-      @user.name = 'a' * 51
-      expect(@user.valid?).to eq(false)
+    it '名前は50文字以下は有効' do
+      user = build :testuser, name: 'a' * 50
+      expect(user.valid?).to eq(true)
+    end
+
+    it '名前は51文字以上は無効' do
+      user = build :testuser, name: 'a' * 51
+      expect(user.valid?).to eq(false)
     end
 
     it 'メールアドレスは255文字まで' do
-      @user.email = 'a' * 244 + '@example.com'
-      expect(@user.valid?).to eq(false)
+      user = build :testuser, email: 'a' * 244 + '@example.com'
+      expect(user.valid?).to eq(false)
     end
 
     it '有効なメールアドレス' do
+      user = build :testuser
       valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
-                            first.last@foo.jp alice+bob@baz.cn]
+                           first.last@foo.jp alice+bob@baz.cn]
       valid_addresses.each do |valid_address|
-        @user.email = valid_address
-        expect(@user.valid?).to eq(true)
+        user.email = valid_address
+        expect(user.valid?).to eq(true)
       end
     end
 
     it '無効なメールアドレス' do
+      user = build :testuser
       invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.
-                            foo@bar_baz.com foo@bar+baz.com foo@bar..com]
+                             foo@bar_baz.com foo@bar+baz.com foo@bar..com]
       invalid_addresses.each do |invalid_address|
-        @user.email = invalid_address
-        expect(@user.valid?).to eq(false)
+        user.email = invalid_address
+        expect(user.valid?).to eq(false)
       end
+    end
+
+    it 'メールアドレスは小文字へ変換して保存される' do
+      user = build :testuser
+      mixed_case_email = 'Foo@ExAMPle.CoM'
+      user.email = mixed_case_email
+      user.save
+      expect(mixed_case_email.downcase).to eq user.reload.email
+    end
+
+    it 'パスワードは5文字以下は無効' do
+      user = build :testuser, password: 'a' * 5, password_confirmation: 'a' * 5
+      expect(user.valid?).to eq(false)
+    end
+
+    it 'パスワードは6文字以上は有効' do
+      user = build :testuser, password: 'a' * 6, password_confirmation: 'a' * 6
+      expect(user.valid?).to eq(true)
+    end
+
+    it '性別のデフォルト値は0で保存される' do
+      user = build :user
+      expect(user.sex).to eq 0
+    end
+  end
+
+  describe 'method' do
+    let(:user) { build :testuser }
+
+    it 'authenticated? メソッドはdigestがnilの時はfalseを返す' do
+      expect(user.authenticated?('')).to eq(false)
     end
   end
 end

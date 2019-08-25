@@ -1,15 +1,7 @@
 <header class="navbar navbar-inverse">
-  <nav>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item"><%= link_to "トップページ", top_path %></li>
-      <li class="nav-item"><%= link_to "このサイトについて", about_path %></li>
-      <li class="nav-item"><%= link_to "新規登録", new_user_path %></li>
-      <li class="nav-item"><%= link_to "ログイン", "#" %></li>
-      <li class="nav-item"><%= link_to "ログアウト", "#" %></li>
-      <li class="nav-item"><%= link_to "会員一覧", users_path %></li>
-      <li class="nav-item"><%= link_to "投稿された希望するサービス一覧", "#" %></li>
-      <li class="nav-item"><%= link_to "希望するサービスを投稿する", "#" %></li>
-      <li class="nav-item"><%= link_to "お気に入り", "#" %></li>
-    </ul>
-  </nav>
+  <% if logged_in? %>
+    <%= render 'shared/logged_in_user' %>
+  <% else %>
+    <%= render 'shared/not_logged_in_user' %>
+  <% end %>  
 </header>
