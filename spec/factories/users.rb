@@ -1,24 +1,32 @@
 FactoryBot.define do
   factory :user do
-    sequence(:name) { |n| "TEST_NAME#{n}" }
-    sequence(:email) { |n| "TEST#{n}@example.com"}
-    sequence(:sex) { |n| n % 3 }
-    sequence(:birthday) { Date.new(1995, 9, 24) }
-    factory :ruaribe do
-      sequence(:name) { 'Ruaribe' }
-      sequence(:email) { 'ruaribe@example.com' }
+
+    trait :sample do
+      sequence(:name) { |n| "sample_user#{n}" }
+      sequence(:email) { |n| "sample#{n}@example.com" }
+      sequence(:sex) { |n| n % 3 }
+      sequence(:birthday) { Date.new(1995, 9, 24) }
+      password { 'password' }
+      password_confirmation { 'password' }
     end
-    factory :valid_user_params do
-      sequence(:name) { 'foobar' }
-      sequence(:email) { 'foobar@example.com' }
-      sequence(:sex) {1}
-      sequence(:birthday) { Date.new(2001, 7, 24) }
+
+    factory :testuser do
+      name { 'TestUser' }
+      email { 'testuser@example.com' }
+      sex { 1 }
+      birthday { '1994-09-22' }
+      password { 'password' }
+      password_confirmation { 'password' }
     end
-    factory :invalid_user_params do
-      sequence(:name) {nil}
-      sequence(:email) {nil}
-      sequence(:sex) {nil}
-      sequence(:birthday) {nil}
+
+
+    trait :invalid do
+      name { '' }
+      email { '' }
+      sex { '' }
+      birthday { '' }
+      password { '' }
+      password_confirmation { '' }
     end
   end
 end

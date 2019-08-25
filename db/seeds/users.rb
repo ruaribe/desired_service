@@ -1,17 +1,22 @@
-User.create!(name: 'Ruaribe',
-             email: 'ruaribe@testuser.com',
+User.create!(name: 'TestUser',
+             email: 'testuser@example.com',
              sex: 1,
-             birthday: '1994-09-22')
+             birthday: '1994-09-22',
+             password: 'password',
+             password_confirmation: 'password')
 
 99.times do |n|
   name = Faker::Name.name
   email = Faker::Internet.email
-  sex = n % 2
+  sex = n % 3
   birthday = '1999-01-01'
+  password = 'password'
   User.create!(
     name: name,
     email: email,
     sex: sex,
-    birthday: birthday
+    birthday: birthday,
+    password: password,
+    password_confirmation: password
   )
 end

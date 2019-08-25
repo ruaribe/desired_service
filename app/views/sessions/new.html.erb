@@ -1,0 +1,39 @@
+<% title_tag_set('ログインページ') %>
+<h1>ログイン</h1>
+<% if flash.alert %>
+<p class='alert alert-danger'><%= flash.alert%></p>
+<%end%>  
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with scope: :session, url: login_path, local: true do |form| %>
+
+    <%= form.label :email %>
+    <%= form.email_field :email, class: 'form-control' %>
+
+    <%= form.label :password %>
+    <%= form.password_field :password, class: 'fonm-control' %>
+
+    <%= form.label :remember_me, class: "checkbox inline" do %>
+      <%= form.check_box :remember_me %>
+      <span>ログイン状態を記憶する</span>
+    <% end %>
+
+    <%= form.submit 'ログイン', class:'btn btn-primary' %>
+    <% end %>
+
+
+    <p><%= link_to '新規登録はこちら', 'users/new' %></p>
+
+
+  </div>
+  <div class="test_user_login">
+      <%= form_with(scope: :session, url: login_path, local: true) do |form| %>
+      <%= form.hidden_field :email, {value: 'testuser@example.com'} %>
+      <%= form.hidden_field :password, {value: 'password'} %>
+      <%= form.submit "簡単ログイン", class: 'btn btn-primary' %>
+      <p>※ポートフォリオ観覧用のログインです。テストユーザーでログインします</p>
+    <% end %>
+  </div>
+      
+</div>
