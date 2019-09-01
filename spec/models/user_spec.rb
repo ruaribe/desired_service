@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'valid' do
+  describe 'validates' do
     it '有効なパラメータがそろっている場合' do
       user = build :testuser
       expect(user.valid?).to eq(true)
@@ -87,6 +87,16 @@ RSpec.describe User, type: :model do
 
     it 'authenticated? メソッドはdigestがnilの時はfalseを返す' do
       expect(user.authenticated?('')).to eq(false)
+    end
+  end
+
+  describe 'associated' do
+    let(:user) { create(:testuser) }
+    it 'ユーザーが削除されたら関連付けされている投稿も削除される' do
+      user.posts.create!(content: 'test')
+      expect do
+        user.destroy
+      end.to change(Post, :count).by(-1)
     end
   end
 end

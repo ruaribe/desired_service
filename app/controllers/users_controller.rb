@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
+  before_action :logged_in_user, only: %I[index edit update destroy]
+  before_action :correct_user, only: %I[edit update]
 
   def index
     @users = User.all
@@ -21,6 +22,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @posts = @user.posts.desc
   end
 
   def edit
@@ -45,6 +47,11 @@ class UsersController < ApplicationController
   private def user_params
     params.require(:user).permit(:name, :email, :sex, :birthday,
                                  :password, :password_confirmation)
+  end
+
+  private def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless current_user?(@user)
   end
 
 end
