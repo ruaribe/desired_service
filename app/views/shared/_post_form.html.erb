@@ -1,0 +1,7 @@
+<%= form_with model: @post ||= current_user.posts.build, local: true do |form| %>
+    <%= render 'shared/error_messages', object: form.object %>
+    <div class='post_field'>
+      <%= form.text_area :content, placeholder: "Compose new micropost..." %>
+    </div>
+    <%= form.submit '投稿', class: "btn btn-primary" %>
+<% end %>

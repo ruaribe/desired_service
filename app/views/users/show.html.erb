@@ -1,7 +1,6 @@
 <% title_tag_set("#{@user.name}さんのページ")%>
 
 <h1><%= @user.name %>さんのページ</h1>
-<p><%= link_to "登録情報の更新", edit_user_path(@user) %></p>
 
 <table>
 <tr>
@@ -21,3 +20,7 @@
   <td><%= @user.birthday&.strftime("%Y年%m月%d日") %></td>
 </tr>
 </table>
+<%= render 'shared/posts' %>
+<% if current_user?(@user) %>
+  <%= render 'shared/post_form'%>
+<% end %>
