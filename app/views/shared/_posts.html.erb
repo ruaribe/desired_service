@@ -1,12 +1,25 @@
-<div class="posts">
-  <% @posts.each do |post| %>
+<% if !@posts.nil? %>
+  <div class="posts">
+  <% if controller.kind_of?(Admin::Base) %>
+    <% @posts.each do |post| %>
+      <p><%= post.content %></p>
+      <p><%= link_to post.user.name, admin_user_path(post.user) %>
+      <span class="timestamp">
+        Posted <%= time_ago_in_words(post.created_at) %>ago.</p>
+        <%= link_to '削除', admin_post_path(post), method: :delete,
+                                        data: { confirm: "You sure?" } %>
+    <% end %>
+  <% else %>
+    <% @posts.each do |post| %>
     <p><%= post.content %></p>
-    <p><%= link_to post.user.name, post.user %>
+    <p><%= link_to post.user.name, admin_user_path(post.user) %>
     <span class="timestamp">
       Posted <%= time_ago_in_words(post.created_at) %>ago.</p>
-    <% if check_page('users','show') && current_user?(post.user) %>
-      <%= link_to '削除', post, method: :delete,
+      <% if current_user?(@user)%>
+      <%= link_to '削除', admin_post_path(post), method: :delete,
                                       data: { confirm: "You sure?" } %>
+      <% end %>
     <% end %>
   <% end %>
-</div>
+  </div>
+<% end%>
