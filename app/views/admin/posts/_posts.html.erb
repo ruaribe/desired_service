@@ -1,0 +1,12 @@
+<div class="posts">
+  <% @posts.each do |post| %>
+    <p><%= post.content %></p>
+    <p><%= link_to post.user.name, post.user %>
+    <span class="timestamp">
+      Posted <%= time_ago_in_words(post.created_at) %>ago.</p>
+    <% if controller.kind_of?(Admin::Base) || current_user?(@user) %>
+      <%= link_to '削除', post, method: :delete,
+                                      data: { confirm: "You sure?" } %>
+    <% end %>
+  <% end %>
+</div>

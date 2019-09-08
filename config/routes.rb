@@ -5,7 +5,13 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
-  
+
   resources :users
   resources :posts
+
+  namespace :admin do
+    root 'static_pages#top'
+    resources :users, only: %I[index show destroy]
+    resources :posts, only: %I[index destroy]
+  end
 end

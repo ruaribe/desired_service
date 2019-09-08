@@ -9,7 +9,7 @@ RSpec.describe "Posts", type: :system do
   let(:other_user) { create(:user, :sample) }
 
   describe '全投稿一覧表示' do
-    let!(:posts) { create_list(:post, 50, :sample) }
+    let!(:posts) { create_list(:post, 20, :sample) }
     shared_examples '全ユーザーの投稿と投稿者が表示される' do
       it do
         posts.each do |post|
@@ -35,7 +35,7 @@ RSpec.describe "Posts", type: :system do
   end
 
   describe 'ユーザー詳細画面の投稿一覧表示' do
-    let!(:other_posts) { create_list :post, 50, user: other_user }
+    let!(:other_posts) { create_list :post, 20, user: other_user }
 
     shared_examples 'そのページのユーザーの投稿一覧が表示される' do
       it do
@@ -76,7 +76,6 @@ RSpec.describe "Posts", type: :system do
       before do
         valid_login(login_user)
         visit root_path
-        # expect(current_path).to eq root_path
       end
       it_behaves_like '最新20件の投稿と投稿者が表示される'
     end

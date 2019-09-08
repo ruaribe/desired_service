@@ -1,12 +1,27 @@
+<% if current_user.admin? %>
+  <nav>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item"><%= link_to "管理トップ", admin_root_path %></li>
+      <li class="nav-item"><%= link_to "ログアウト", logout_path, method: :delete %></li>
+      <li class="nav-item"><%= link_to "会員管理", admin_users_path %></li>
+      <li class="nav-item"><%= link_to "会員一覧", users_path %></li>
+      <li class="nav-item"><%= link_to "投稿管理", admin_posts_path %></li>
+      <li class="nav-item"><%= link_to "投稿一覧", posts_path %></li>
+      <li class="nav-item"><%= link_to "お気に入り", "#" %></li>
+      <li class="nav-item"><%= link_to "一般トップページ", top_path %></li>
+    </ul>
+  </nav>
+    <p><%= link_to "#{current_user.name}さん", current_user %></p>
+<% else %>
   <nav>
     <ul class="nav navbar-nav navbar-right">
       <li class="nav-item"><%= link_to "トップページ", top_path %></li>
       <li class="nav-item"><%= link_to "このサイトについて", about_path %></li>
       <li class="nav-item"><%= link_to "ログアウト", logout_path, method: :delete %></li>
       <li class="nav-item"><%= link_to "会員一覧", users_path %></li>
-      <li class="nav-item"><%= link_to "投稿された希望するサービス一覧", posts_path %></li>
-      <li class="nav-item"><%= link_to "希望するサービスを投稿する", "#" %></li>
+      <li class="nav-item"><%= link_to "投稿一覧", posts_path %></li>
       <li class="nav-item"><%= link_to "お気に入り", "#" %></li>
     </ul>
   </nav>
     <p><%= link_to "#{current_user.name}さん", current_user %></p>
+<% end %>

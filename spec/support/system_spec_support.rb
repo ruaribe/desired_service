@@ -7,6 +7,15 @@ module SystemSpecSupport
       click_on 'ログイン'
     end
   end
+
+  def show_gender(db_gender)
+    genders = %w[未設定 男 女]
+    genders[db_gender]
+  end
+
+  def show_birthday(birthday)
+    birthday&.strftime('%Y年%m月%d日')
+  end
 end
 
 RSpec.configure do |config|

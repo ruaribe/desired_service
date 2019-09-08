@@ -1,0 +1,17 @@
+<% title_tag_set("会員管理")%>
+
+<h1>会員管理</h1>
+
+  <% @users.each do |user| %>
+  <div class='user'>
+  <p>
+    <%= link_to user.name, admin_user_path(user) %>
+    <% unless current_user?(user) %>
+      <%= link_to "削除", admin_user_path(user), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+    <% end %>
+  </p>
+  </div>
+<% end %>
+
+
+
