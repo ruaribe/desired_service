@@ -14,7 +14,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in(@user)
-      redirect_to @user, notice: 'ユーザーを登録しました。'
+      flash[:success] = 'ユーザーを登録しました。'
+      redirect_to @user
     else
       render 'new'
     end
@@ -32,7 +33,8 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
-      redirect_to @user, notice: 'ユーザー情報を更新しました。'
+      flash[:success] = 'ユーザー情報を更新しました。'
+      redirect_to @user
     else
       render 'edit'
     end
@@ -41,7 +43,8 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to users_url, notice: 'ユーザーを削除しました。'
+    flash[:success] = 'ユーザーを削除しました。'
+    redirect_to users_url
   end
 
   private def user_params

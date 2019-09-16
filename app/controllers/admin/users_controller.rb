@@ -9,11 +9,11 @@ class Admin::UsersController < Admin::Base
   def show
     @user = User.find(params[:id])
     @posts = @user.posts.desc
-    render 'users/show'
   end
 
   def destroy
     User.find(params[:id]).destroy
-    redirect_to admin_users_url, notice: 'ユーザーを削除しました。'
+    flash[:success] = 'ユーザーを削除しました。'
+    redirect_to admin_users_url
   end
 end

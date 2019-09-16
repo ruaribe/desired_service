@@ -76,7 +76,7 @@ RSpec.describe 'Users', type: :system do
         click_on 'Create User'
 
         expect(current_path).to eq user_path(User.last)
-        expect(page).to have_css('div.notice')
+        expect(page).to have_css('div.alert')
         expect(page).to have_content(build_user.name)
         expect(page).to have_no_link('ログイン')
         expect(page).to have_link('ログアウト')
@@ -108,10 +108,12 @@ RSpec.describe 'Users', type: :system do
 
   describe 'ユーザー詳細表示機能' do
     shared_examples 'ユーザー情報が表示される' do
-      expect(page).to have_content show_user.name
-      expect(page).to have_content show_user.email
-      expect(page).to have_content show_gender(show_user.sex)
-      expect(page).to have_content show_birthday(show_user.birthday)
+      it do
+        expect(page).to have_content show_user.name
+        expect(page).to have_content show_user.email
+        expect(page).to have_content show_gender(show_user.sex)
+        expect(page).to have_content show_birthday(show_user.birthday)
+      end
     end
 
     let!(:show_user) { create(:user, :sample) }
@@ -165,7 +167,7 @@ RSpec.describe 'Users', type: :system do
         click_on 'Update User'
 
         expect(current_path).to eq user_path(user)
-        expect(page).to have_css('div.notice')
+        expect(page).to have_css('div.alert')
         expect(page).to have_content 'lily'
         expect(page).to have_content 'lily@exam.jp'
         expect(page).to have_content '女'

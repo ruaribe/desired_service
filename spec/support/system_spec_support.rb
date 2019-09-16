@@ -3,7 +3,7 @@ module SystemSpecSupport
     visit login_path
     fill_in 'session_email', with: login_user.email
     fill_in 'session_password', with: login_user.password
-    within '.col-md-6' do
+    within '.login' do
       click_on 'ログイン'
     end
   end

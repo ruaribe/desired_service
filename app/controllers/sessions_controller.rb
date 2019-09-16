@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       redirect_back_or user
     else
-      flash.now.alert = 'メールアドレスとパスワードが一致しません。'
+      flash.now[:danger] = 'メールアドレスとパスワードが一致しません。'
       render 'new'
     end
   end
