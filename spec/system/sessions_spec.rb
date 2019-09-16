@@ -22,7 +22,7 @@ RSpec.describe 'Sessions', type: :system do
         visit login_path
         fill_in 'session_email', with: user.email
         fill_in 'session_password', with: user.password
-        within '.col-md-6' do
+        within '.login' do
           click_on 'ログイン'
         end
 
@@ -37,7 +37,7 @@ RSpec.describe 'Sessions', type: :system do
         visit login_path
         fill_in 'session_email', with: ''
         fill_in 'session_password', with: user.password
-        within '.col-md-6' do
+        within '.login' do
           click_on 'ログイン'
         end
       end
@@ -50,7 +50,7 @@ RSpec.describe 'Sessions', type: :system do
         visit login_path
         fill_in 'session_email', with: user.email
         fill_in 'session_password', with: ''
-        within '.col-md-6' do
+        within '.login' do
           click_on 'ログイン'
         end
       end
@@ -63,7 +63,7 @@ RSpec.describe 'Sessions', type: :system do
         visit login_path
         fill_in 'session_email', with: user.email
         fill_in 'session_password', with: 'aaaaaaaa'
-        within '.col-md-6' do
+        within '.login' do
           click_on 'ログイン'
         end
       end
@@ -76,7 +76,7 @@ RSpec.describe 'Sessions', type: :system do
         visit login_path
         fill_in 'session_email', with: ''
         fill_in 'session_password', with: ''
-        within '.col-md-6' do
+        within '.login' do
           click_on 'ログイン'
         end
       end
@@ -105,7 +105,7 @@ RSpec.describe 'Sessions', type: :system do
     it 'テストユーザーでログインしユーザー詳細ページへ移動する' do
       visit login_path
       within '.test_user_login' do
-        click_on '簡単ログイン'
+        click_on 'テストユーザーとしてログイン'
       end
       expect(page).to have_content test_user.name
       expect(current_path).to eq user_path(test_user)

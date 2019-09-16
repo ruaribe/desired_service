@@ -9,7 +9,8 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
-      redirect_to @post.user, notice: '投稿しました'
+      flash[:success] = '投稿しました'
+      redirect_to @post.user
     else
       @user = @post.user
       @posts = @user.posts.reload
@@ -19,7 +20,8 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_back(fallback_location: root_url, notice: '投稿を削除しました。')
+    flash[:success] = '投稿を削除しました。'
+    redirect_back(fallback_location: root_url)
   end
 
   private def post_params

@@ -1,9 +1,10 @@
 <% title_tag_set("会員一覧")%>
 
 <h1>会員一覧</h1>
-<% @users.each do |user| %>
-  <p>
+<div class='users'>
+  <% @users.each do |user| %>
+  <div class="user">
     <%= link_to user.name, user%>
-  </p>
-<% end %>
-
+  </div>
+  <% end %>
+</div>

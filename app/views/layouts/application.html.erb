@@ -11,15 +11,29 @@
 </head>
 
 <body>
-  <%= render 'shared/header' %>
-  <main class="container-fluid">
+  <div class='container-fluid'>
+      <%= render 'shared/header' %>
+  
+  <main class="container">
+    <% flash.each do |message_type, message| %>
+      <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+    <% end %>
+  <div class='row'>
+    <aside class='col-md-2'>
+      <%= render 'shared/sidebar' %>
+    </aside>
 
-  <% if flash.notice%>
-    <div class="notice alert-success"><%= flash.notice %></div>
-  <% end %>
-      
-    <%= yield %>
+    <div class='col-md-8'>
+      <%= yield %>
+    </div>
+
+    <aside class=col-md-2>
+      <%= render 'shared/feed' %>
+    </aside>
+  </div>  
   </main>
+  </div>
+
 </body>
 
 </html>

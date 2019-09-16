@@ -1,9 +1,10 @@
+<% provide :admin, '/admin'%>
 <% title_tag_set("#{@user.name}さんのページ")%>
 
 <h1><%= @user.name %>さんのページ</h1>
 <div class ='row'>
 <div class="user col-md-5">
-<table>  
+<table>
 <tr>
   <th>ユーザー名</th>
   <td><%= @user.name %></td>

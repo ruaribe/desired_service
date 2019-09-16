@@ -11,7 +11,7 @@
       <li class="nav-item"><%= link_to "一般トップページ", top_path %></li>
     </ul>
   </nav>
-    <p><%= link_to "#{current_user.name}さん", current_user %></p>
+    <p><%= link_to "#{current_user.name}さん", edit_user_path(current_user) %></p>
 <% else %>
   <nav>
     <ul class="nav navbar-nav navbar-right">

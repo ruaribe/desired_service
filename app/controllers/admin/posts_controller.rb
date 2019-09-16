@@ -9,6 +9,7 @@ class Admin::PostsController < Admin::Base
   def destroy
     post = Post.find_by(id: params[:id])
     post.destroy
-    redirect_back(fallback_location: root_url, notice: '投稿を削除しました。')
+    flash[:success] = '投稿を削除しました。'
+    redirect_back(fallback_location: root_url)
   end
 end
