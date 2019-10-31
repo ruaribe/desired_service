@@ -23,7 +23,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @posts = @user.posts.desc
+    @posts = @user.posts.desc.includes(:liked_users)
   end
 
   def edit

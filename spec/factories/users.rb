@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :user do
 
     trait :sample do
-      sequence(:name) { |n| "#{Faker::Name.name} #{n}" }
+      sequence(:name) { |n| "#{n}testuser" }
       sequence(:email) { |n| "sample#{n}@example.com" }
       sequence(:sex) { |n| n % 3 }
       sequence(:birthday) { Date.new(1995, 9, 24) }

@@ -5,14 +5,6 @@ module ApplicationHelper
     provide(:title, page_title)
   end
 
-  def submit_button_name
-    if controller.action_name == 'new'
-      "作成"
-    else
-      "更新"
-    end
-  end
-
   def check_page(controller_name, action_name)
     controller.controller_name == controller_name && controller.action_name == action_name
   end

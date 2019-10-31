@@ -1,0 +1,14 @@
+<div class="post <%= "post#{post.id}" %>">
+  <div class='user'>
+    <%= link_to post.user.name, user_path %>
+    <span class="timestamp"><%= post.created_at %></span>
+  </div>
+  <div class="content"><%= post.content %></div>    
+  <% if controller.kind_of?(Admin::Base) || current_user?(@user) %>
+    <div class="delete">
+      <%= link_to '削除', post_path,
+                          method: :delete, data: { confirm: "You sure?" } %>
+    </div>
+  <% end %>
+  <%= render partial: 'shared/like_form', locals: {post: post} %>
+</div>

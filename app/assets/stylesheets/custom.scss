@@ -1,6 +1,8 @@
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
+@import "font-awesome-sprockets";
+@import "font-awesome";
 /* mixins, variables,etc.*/
 
 $gray-medium-light: #eaeaea;
@@ -240,29 +242,33 @@ input {
     padding: 10px;
     border: medium solid darkcyan;
     background-color: #d6f5d6;
-  }
-  list-style: none;
-  padding: 0;
-  li {
-    padding: 10px 0;
-    border-top: 1px solid #e8e8e8;
-  }
-  .user {
-    padding: 0px;
-    border-bottom: medium solid darkcyan;
-  }
-  .content {
-    display: block;
-    margin-top: 10px;
-    white-space: pre-wrap;
-    line-break: normal;
-    word-break: break-all;
-  }
-  .timestamp {
-    color: $gray-light;
-    float: right;
-  }
-  .delete {
-    text-align: end;
+
+    .user {
+      padding: 0px;
+      border-bottom: medium solid darkcyan;
+    }
+
+    .timestamp {
+      color: $gray-light;
+      float: right;
+    }
+
+    .delete {
+      text-align: end;
+    }
+
+    .content {
+      display: block;
+      margin-top: 10px;
+      white-space: pre-wrap;
+      line-break: normal;
+      word-break: break-all;
+    }
+
+    .like{
+      i {
+        color: red;
+      }
+    }
   }
 }

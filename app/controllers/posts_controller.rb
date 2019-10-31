@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :correct_user, only: :destroy
 
   def index
-    @posts = Post.desc.includes(:user)
+    @posts = Post.desc.includes(:user, :liked_users)
   end
 
   def create

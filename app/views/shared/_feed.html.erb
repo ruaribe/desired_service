@@ -1,1 +1,8 @@
-<h4>me too ランキング</h4>
+<h4>いいね！ランキング</h4>
+
+<div class="feed">
+  <% @feed.each.with_index(1) do |post, i| %>
+    <%= "第#{i}位"%>
+    <%= render partial: 'posts/post', locals: { post: post, user_path: user_path(post.user),  post_path: post_path(post) } %>
+  <% end %>
+</div>

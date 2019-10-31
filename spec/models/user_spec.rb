@@ -18,8 +18,8 @@ RSpec.describe User, type: :model do
     end
 
     it 'emailの重複はNG' do
-      create(:user, :sample)
-      user = build :testuser, email: 'sample1@example.com'
+      create(:user, :sample, email: 'sample0@example.com')
+      user = build :testuser, email: 'sample0@example.com'
       expect(user.valid?).to eq(false)
     end
 
@@ -33,7 +33,12 @@ RSpec.describe User, type: :model do
       expect(user.valid?).to eq(false)
     end
 
-    it 'メールアドレスは255文字まで' do
+    it 'メールアドレスは254文字以下は有効' do
+      user = build :testuser, email: 'a' * 243 + '@example.com'
+      expect(user.valid?).to eq(true)
+    end
+
+    it 'メールアドレスは255文字以上は無効' do
       user = build :testuser, email: 'a' * 244 + '@example.com'
       expect(user.valid?).to eq(false)
     end
@@ -77,7 +82,7 @@ RSpec.describe User, type: :model do
     end
 
     it '性別のデフォルト値は0で保存される' do
-      user = build :user
+      user = User.new
       expect(user.sex).to eq 0
     end
   end
@@ -85,18 +90,26 @@ RSpec.describe User, type: :model do
   describe 'method' do
     let(:user) { build :testuser }
 
-    it 'authenticated? メソッドはdigestがnilの時はfalseを返す' do
+    it 'authenticated?メソッドはdigestがnilの時はfalseを返す' do
       expect(user.authenticated?('')).to eq(false)
     end
   end
 
   describe 'associated' do
     let(:user) { create(:testuser) }
+    let(:post) { create(:post, :sample) }
     it 'ユーザーが削除されたら関連付けされている投稿も削除される' do
       user.posts.create!(content: 'test')
       expect do
         user.destroy
       end.to change(Post, :count).by(-1)
+    end
+
+    it 'ユーザーが削除されたら関連付けされているいいねも削除される' do
+      user.likes.create!(post: post)
+      expect do
+        user.destroy
+      end.to change(Like, :count).by(-1)
     end
   end
 end
