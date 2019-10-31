@@ -62,7 +62,7 @@ RSpec.describe "Posts", type: :system do
 
   describe 'トップページの最新投稿表示' do
     let(:displayed_posts) { Post.order(created_at: :desc).limit(20) }
-    before { create_list(:post, 50, :sample) }
+    before { create_list(:post, 21, :sample) }
     shared_examples '最新20件の投稿と投稿者が表示される' do
       it do
         displayed_posts.each do |post|
@@ -83,6 +83,44 @@ RSpec.describe "Posts", type: :system do
     context 'ログインしていない時' do
       before { visit root_path }
       it_behaves_like '最新20件の投稿と投稿者が表示される'
+    end
+  end
+
+  describe 'トレンド表示機能' do
+    let(:displayed_posts) { Post.find(Like.group(:post_id).order(Arel.sql('count(post_id) desc')).limit(20).pluck(:post_id)) }
+    before do
+      create_list(:post, 22, :sample)
+      Post.take(21).each do |post|
+        create(:like, user: other_user, post: post)
+      end
+    end
+
+    shared_examples 'いいね！が付けられた数が多い順に20件表示される。' do
+      it do
+        displayed_posts.each do |post|
+          expect(page).to have_content post.content
+          expect(page).to have_content post.user.name
+        end
+      end
+    end
+
+    context 'ログインしている時' do
+      before do
+        valid_login(login_user)
+        visit root_path
+        click_on 'トレンド'
+      end
+
+      it_behaves_like 'いいね！が付けられた数が多い順に20件表示される。'
+    end
+
+    context 'ログインしていない時' do
+      before do
+        visit root_path
+        click_on 'トレンド'
+      end
+
+      it_behaves_like 'いいね！が付けられた数が多い順に20件表示される。'
     end
   end
 

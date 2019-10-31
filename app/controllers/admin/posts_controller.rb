@@ -3,7 +3,7 @@
 class Admin::PostsController < Admin::Base
 
   def index
-    @posts = Post.desc.includes(:user)
+    @posts = Post.desc.includes(:user, :liked_users)
   end
 
   def destroy

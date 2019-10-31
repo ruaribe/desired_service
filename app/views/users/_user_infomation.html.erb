@@ -1,12 +1,15 @@
+<% @user ||= current_user%>
 <table>
 <tr>
   <th>ユーザー名</th>
-  <td><%= current_user.name %></td>
+  <td><%= @user.name %></td>
 </tr>
+<% if current_user?(@user) %>
 <tr>
   <th>メールアドレス</th>
-  <td><%= current_user.email %></td>
+  <td><%= @user.email %></td>
 </tr>
+<% end %>
 <tr>
   <th>性別</th>
   <td><%= current_user.sex == 0 ? '未設定' : current_user.sex == 1 ? '男' : '女' %></td>
@@ -16,5 +19,3 @@
   <td><%= current_user.birthday&.strftime("%Y年%m月%d日") %></td>
 </tr>
 </table>
-
-<%= render 'shared/post_form'%>

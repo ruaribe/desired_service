@@ -2,6 +2,8 @@ class User < ApplicationRecord
   attr_accessor :remember_token
 
   has_many :posts, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :liked_posts, through: :likes, source: 'post'
 
   before_save { email.downcase! }
 
@@ -37,4 +39,6 @@ class User < ApplicationRecord
   def forget
     update_attribute(:remember_digest, nil)
   end
+
+
 end
