@@ -85,6 +85,7 @@ GEM
       railties (>= 4.2.0)
     faker (2.6.0)
       i18n (>= 1.6, < 1.8)
+    ffi (1.11.1)
     ffi (1.11.1-x64-mingw32)
     font-awesome-sass (5.4.1)
       sassc (>= 1.11)
@@ -110,6 +111,9 @@ GEM
       activerecord
       kaminari-core (= 1.1.1)
     kaminari-core (1.1.1)
+    kaminari-i18n (0.5.0)
+      kaminari
+      rails
     launchy (2.4.3)
       addressable (~> 2.3)
     loofah (2.3.1)
@@ -124,9 +128,13 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.12.2)
+    msgpack (1.3.1)
     msgpack (1.3.1-x64-mingw32)
+    mysql2 (0.5.2)
     mysql2 (0.5.2-x64-mingw32)
     nio4r (2.5.2)
+    nokogiri (1.10.4)
+      mini_portile2 (~> 2.4.0)
     nokogiri (1.10.4-x64-mingw32)
       mini_portile2 (~> 2.4.0)
     public_suffix (4.0.1)
@@ -192,6 +200,8 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    sassc (2.2.1)
+      ffi (~> 1.9)
     sassc (2.2.1-x64-mingw32)
       ffi (~> 1.9)
     selenium-webdriver (3.142.6)
@@ -252,6 +262,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   jquery-rails
   kaminari
+  kaminari-i18n
   launchy (~> 2.4.3)
   mysql2 (~> 0.5.2)
   puma (~> 3.11)

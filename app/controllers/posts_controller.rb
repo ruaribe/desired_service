@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   before_action :correct_user, only: :destroy
 
   def index
-    @posts = Post.desc.includes(:user, :liked_users)
+    @posts = Post.desc.page(params[:page]).per(20).includes(:user, :liked_users)
   end
 
   def create
@@ -13,7 +13,7 @@ class PostsController < ApplicationController
       redirect_to @post.user
     else
       @user = @post.user
-      @posts = @user.posts.reload
+      @posts = @user.posts.reload.page(params[:page]).per(20)
       render 'users/show'
     end
   end
