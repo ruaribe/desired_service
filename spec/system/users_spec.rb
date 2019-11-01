@@ -46,6 +46,8 @@ RSpec.describe 'Users', type: :system do
 
       it_behaves_like 'ユーザー名がリンクになっている一覧が表示される。'
       it_behaves_like 'リンクをクリックしたらそのユーザーの詳細ページへ移動する。'
+
+      
     end
 
     context '管理者ユーザーでログインしている場合' do
@@ -56,6 +58,33 @@ RSpec.describe 'Users', type: :system do
 
       it_behaves_like 'ユーザー名がリンクになっている一覧が表示される。'
       it_behaves_like 'リンクをクリックしたらそのユーザーの詳細ページへ移動する。'
+    end
+
+    describe 'ページネーション機能' do
+      before do
+        create_list(:user, 21, :sample, created_at: '1994-09-22')
+      end
+      it '2ページ目の投稿一覧を開く' do
+        valid_login(login_user)
+
+        click_link '会員一覧'
+
+        expect(page).to have_css('.pagination', count: 2)
+        expect(page).to have_no_css 'span.prev'
+
+        User.order(created_at: :desc).page(1).per(20) do |user|
+          expect(page).to have_link user.name
+        end
+
+        find('span.next', match: :first).click_link
+
+        User.order(created_at: :desc).page(2).per(20) do |user|
+          expect(page).to have_link user.name
+        end
+
+        expect(page).to have_no_css 'span.next'
+        expect(page).to have_css 'span.prev'
+      end
     end
   end
 

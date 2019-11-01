@@ -1,6 +1,7 @@
 <% title_tag_set("会員管理")%>
 
 <h1>会員管理</h1>
+<%= paginate @users %>
 <div class='users'>
   <% @users.each do |user| %>
   <div class='user'>
@@ -11,3 +12,4 @@
   </div>
 <% end %>
 </div>
+<%= paginate @users %>

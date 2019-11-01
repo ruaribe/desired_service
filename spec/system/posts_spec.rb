@@ -213,4 +213,31 @@ RSpec.describe "Posts", type: :system do
       end
     end
   end
+
+  describe 'ページネーション機能' do
+    before do
+      create_list(:post, 21, :sample, created_at: '1994-09-22')
+    end
+    it '2ページ目の投稿一覧を開く' do
+      valid_login(login_user)
+
+      click_link '投稿一覧'
+
+      expect(page).to have_css('.pagination', count: 2)
+      expect(page).to have_no_css 'span.prev'
+
+      Post.order(created_at: :desc).page(1).per(20) do |post|
+        expect(page).to have_content post.content
+      end
+
+      find('span.next', match: :first).click_link
+
+      Post.order(created_at: :desc).page(2).per(20) do |post|
+        expect(page).to have_content post.content
+      end
+
+      expect(page).to have_no_css 'span.next'
+      expect(page).to have_css 'span.prev'
+    end
+  end
 end

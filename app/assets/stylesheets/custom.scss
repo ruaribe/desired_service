@@ -265,10 +265,18 @@ input {
       word-break: break-all;
     }
 
-    .like{
+    .like {
       i {
         color: red;
       }
     }
   }
+}
+
+.pagination {
+  padding: 4px 8px;
+  border: 1px solid #499;
+  word-spacing: 4px;
+  background-color: #d6f5d6;
+  margin: 20px;
 }

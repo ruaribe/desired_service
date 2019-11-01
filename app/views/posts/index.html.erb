@@ -1,4 +1,6 @@
 <% title_tag_set("投稿一覧")%>
 
 <h1>投稿一覧</h1>
+<%= paginate @posts %>
 <%= render 'shared/posts' %>
+<%= paginate @posts %>

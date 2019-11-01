@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   def top
-    @posts = Post.desc.limit(20).includes(:user, :liked_users)
+    @posts = Post.desc.page(params[:page]).per(20).limit(20).includes(:user, :liked_users)
   end
 
   def about
