@@ -23,5 +23,5 @@
       <li class="nav-item"><%= link_to "お気に入り", "#" %></li>
     </ul>
   </nav>
-    <p><%= link_to "#{current_user.name}さん", current_user %></p>
+    <p><%= link_to "#{current_user.name}さん", edit_user_path(current_user) %></p>
 <% end %>

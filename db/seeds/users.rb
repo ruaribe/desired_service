@@ -21,3 +21,12 @@ User.create!(name: 'TestUser',
     password_confirmation: password
   )
 end
+
+filename = 'profile.png'
+path = Rails.root.join(__dir__, filename)
+
+user = User.find_by(name: 'TestUser')
+
+File.open(path) do |f|
+  user.profile_picture.attach(io: f, filename: filename)
+end

@@ -93,6 +93,7 @@ RSpec.describe 'Users', type: :system do
 
     context '有効な情報を送信した時' do
       it '詳細ページへ移動し、ユーザーを作成したという通知が表示される。' do
+        attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/profile1.png"
         fill_in 'user_name', with: build_user.name
         fill_in 'user_email', with: build_user.email
         fill_in 'user_password', with: build_user.password
@@ -107,6 +108,7 @@ RSpec.describe 'Users', type: :system do
         expect(current_path).to eq user_path(User.last)
         expect(page).to have_css('div.alert')
         expect(page).to have_content(build_user.name)
+        expect(page).to have_css 'img.profile_picture'
         expect(page).to have_no_link('ログイン')
         expect(page).to have_link('ログアウト')
       end
@@ -171,7 +173,9 @@ RSpec.describe 'Users', type: :system do
   end
 
   describe 'ユーザー情報更新機能' do
-    before  { valid_login(user) }
+    before do
+      valid_login(user)
+    end
 
     context '有効なパラメータな場合' do
       it 'ユーザー情報が更新され、詳細ページへ移動する' do
@@ -197,6 +201,7 @@ RSpec.describe 'Users', type: :system do
 
         expect(current_path).to eq user_path(user)
         expect(page).to have_css('div.alert')
+        expect(page).to have_no_css 'img.profile_picture'
         expect(page).to have_content 'lily'
         expect(page).to have_content 'lily@exam.jp'
         expect(page).to have_content '女'
@@ -227,6 +232,62 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_content user.email
         expect(page).to have_content '男'
         expect(page).to have_content '1994年09月22日'
+      end
+    end
+
+    describe 'プロフィール画像の変更' do
+      context '画像を設定している場合' do
+        before do
+          user.profile_picture.attach(io: File.open('spec/factories/profile1.png'),
+          filename: 'profile1.png', content_type: 'application/png')
+        end
+        it '画像を変更できる' do
+          visit edit_user_path(user)
+
+          expect(page).to have_css "img[src$='profile1.png']"
+
+          attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/profile2.png"
+          fill_in 'user_password', with: 'password'
+          fill_in 'user_password_confirmation', with: 'password'
+
+          click_on 'Update User'
+
+          expect(current_path).to eq user_path(user)
+          expect(page).to have_css('div.alert')
+          expect(page).to have_css 'img.profile_picture'
+          expect(page).to have_css "img[src$='profile2.png']"
+        end
+
+        it '画像を削除できる' do
+          visit edit_user_path(user)
+
+          check('user_remove_profile_picture')
+          fill_in 'user_password', with: 'password'
+          fill_in 'user_password_confirmation', with: 'password'
+
+          click_on 'Update User'
+
+          expect(current_path).to eq user_path(user)
+          expect(page).to have_css('div.alert')
+          expect(page).to have_no_css 'img.profile_picture'
+        end
+      end
+
+      context '画像を設定していない場合' do
+        it '画像を設定できる' do
+          visit edit_user_path(user)
+
+          attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/profile1.png"
+          fill_in 'user_password', with: 'password'
+          fill_in 'user_password_confirmation', with: 'password'
+
+          click_on 'Update User'
+
+          expect(current_path).to eq user_path(user)
+          expect(page).to have_css('div.alert')
+          expect(page).to have_css 'img.profile_picture'
+          expect(page).to have_css "img[src$='profile1.png']"
+        end
       end
     end
   end
