@@ -42,6 +42,10 @@ FactoryBot.define do
       trait :admin do
         admin { true }
       end
+
+      trait :profile_picture do
+        profile_picture { File.open(Rails.root.join("spec/factories/profile.png")) }
+      end
     end
   end
 end
