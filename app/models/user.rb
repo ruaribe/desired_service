@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   attr_accessor :remember_token
+  attr_accessor :current_password
 
   has_one_attached :profile_picture
   attribute :new_profile_picture
@@ -19,12 +20,15 @@ class User < ApplicationRecord
   end
 
   validates :name, presence: true, length: { maximum: 50 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i.freeze
   validates :email, presence: true, uniqueness: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX }
 
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
+  VALID_PASSWORD_REGEX = /\A\w*\z/.freeze
+  validates :password, presence: { if: :current_password },
+                       length: { minimum: 6, allow_nil: true },
+                       format: { with: VALID_PASSWORD_REGEX }
 
   validate if: :new_profile_picture do
     if new_profile_picture.respond_to?(:content_type)

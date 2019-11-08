@@ -23,6 +23,7 @@
     <%= form.text_field :email, class: 'form-control' %>
   </div>
 
+  <% if @user.new_record? %>
   <div class="form-group">
     <%= form.label :password %>
     <%= form.password_field :password, class: 'form-control'  %>
@@ -32,6 +33,7 @@
     <%= form.label :password_confirmation %>
     <%= form.password_field :password_confirmation, class: 'form-control' %>
   </div>
+  <% end %>
 
   <div class="form-group">
     <%= form.label '性別' %>

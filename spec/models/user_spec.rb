@@ -81,7 +81,32 @@ RSpec.describe User, type: :model do
       expect(user.valid?).to eq(true)
     end
 
-    it '性別のデフォルト値は0で保存される' do
+    it 'パスワードは空白の場合は無効' do
+      user = build :testuser, password: '', password_confirmation: ''
+      expect(user).to_not be_valid
+    end
+
+    it '有効なパスワード' do
+      user = build :testuser
+      valid_passwords = %w[abcdef ABCDEF 123456 ______ 1aA_2bB_]
+      valid_passwords.each do |valid_password|
+        user.password = valid_password
+        user.password_confirmation = valid_password
+        expect(user.valid?).to eq(true)
+      end
+    end
+
+    it '無効なパスワード' do
+      user = build :testuser
+      invalid_passwords = %w[a-cdef A.CDEF 1@3456 _\ ____ 1$A_2bB_]
+      invalid_passwords.each do |invalid_password|
+        user.password = invalid_password
+        user.password_confirmation = invalid_password
+        expect(user.valid?).to eq(false)
+      end
+    end
+
+    it '性別のデフォルト値は0' do
       user = User.new
       expect(user.sex).to eq 0
     end

@@ -190,8 +190,6 @@ RSpec.describe 'Users', type: :system do
 
         fill_in 'user_name', with: 'lily'
         fill_in 'user_email', with: 'lily@exam.jp'
-        fill_in 'user_password', with: 'password'
-        fill_in 'user_password_confirmation', with: 'password'
         select '女', from: 'user_sex'
         select '2004', from: 'user_birthday_1i'
         select '12', from: 'user_birthday_2i'
@@ -247,8 +245,6 @@ RSpec.describe 'Users', type: :system do
           expect(page).to have_css "img[src$='profile1.png']"
 
           attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/profile2.png"
-          fill_in 'user_password', with: 'password'
-          fill_in 'user_password_confirmation', with: 'password'
 
           click_on 'Update User'
 
@@ -262,8 +258,6 @@ RSpec.describe 'Users', type: :system do
           visit edit_user_path(user)
 
           check('user_remove_profile_picture')
-          fill_in 'user_password', with: 'password'
-          fill_in 'user_password_confirmation', with: 'password'
 
           click_on 'Update User'
 
@@ -278,8 +272,6 @@ RSpec.describe 'Users', type: :system do
           visit edit_user_path(user)
 
           attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/profile1.png"
-          fill_in 'user_password', with: 'password'
-          fill_in 'user_password_confirmation', with: 'password'
 
           click_on 'Update User'
 

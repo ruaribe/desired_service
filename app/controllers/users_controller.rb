@@ -48,14 +48,17 @@ class UsersController < ApplicationController
   end
 
   private def user_params
-    params.require(:user).permit(:new_profile_picture, :remove_profile_picture,
-                                 :name, :email, :sex, :birthday,
-                                 :password, :password_confirmation)
+    attrs = [
+      :new_profile_picture, :remove_profile_picture,
+      :name, :email, :sex, :birthday
+    ]
+
+    attrs << :password << :password_confirmation if params[:action] == 'create'
+    params.require(:user).permit(attrs)
   end
 
   private def correct_user
     @user = User.find(params[:id])
     redirect_to(root_url) unless current_user?(@user)
   end
-
 end
