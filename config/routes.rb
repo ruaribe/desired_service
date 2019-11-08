@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'passwords/edit'
   root 'static_pages#top'
   get '/top', to: 'static_pages#top'
   get '/about', to: 'static_pages#about'
@@ -9,8 +10,9 @@ Rails.application.routes.draw do
 
   resources :users
   resources :posts
-  resources :likes, only: %w[create destroy]
+  resources :likes, only: [:create, :destroy]
 
+  resource :password, only: [:show, :edit, :update]
   namespace :admin do
     root 'static_pages#top'
     resources :users, only: %I[index show destroy]
