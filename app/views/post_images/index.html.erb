@@ -1,0 +1,30 @@
+<% title_tag_set("投稿の画像管理")%>
+
+<h1>投稿の画像管理</h1>
+
+<div>
+  <%= link_to '画像の追加', new_post_image_path %>
+</div>
+
+<div class='post_content'>
+  <h3>投稿内容</h3>
+  <p><%= @post.content %></p>
+</div>
+
+
+<% if @images.present? %>
+<div class='images'>
+  <% @images.each do |image| %>
+  <div class='image'>
+    <%= image_tag image.data.variant(resize: '100x>') , alt: image.alt_text %>
+  </div>
+
+  <div class='image_edit'>
+      <%= link_to '編集', edit_post_image_path(@post, image) %> |
+      <%= link_to "削除", post_image_path(@post, image), class: 'delete', method: :delete, data: { confirm: "本当に削除しますか？" } %>
+  </div>
+<% end %>
+</div>
+<% else %>
+<p>画像がありません</p>
+<% end %>

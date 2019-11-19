@@ -44,7 +44,7 @@ FactoryBot.define do
       end
 
       trait :profile_picture do
-        profile_picture { File.open(Rails.root.join("spec/factories/profile.png")) }
+        profile_picture { File.open(Rails.root.join("spec/factories/image1.jpg")) }
       end
     end
   end

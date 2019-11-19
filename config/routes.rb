@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'passwords/edit'
   root 'static_pages#top'
   get '/top', to: 'static_pages#top'
   get '/about', to: 'static_pages#about'
@@ -9,7 +8,10 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   resources :users
-  resources :posts
+  resources :posts do
+    resources :images, controller: 'post_images'
+  end
+  
   resources :likes, only: [:create, :destroy]
 
   resource :password, only: [:show, :edit, :update]
