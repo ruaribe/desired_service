@@ -93,7 +93,7 @@ RSpec.describe 'Users', type: :system do
 
     context '有効な情報を送信した時' do
       it '詳細ページへ移動し、ユーザーを作成したという通知が表示される。' do
-        attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/profile1.png"
+        attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/image1.jpg"
         fill_in 'user_name', with: build_user.name
         fill_in 'user_email', with: build_user.email
         fill_in 'user_password', with: build_user.password
@@ -236,22 +236,22 @@ RSpec.describe 'Users', type: :system do
     describe 'プロフィール画像の変更' do
       context '画像を設定している場合' do
         before do
-          user.profile_picture.attach(io: File.open('spec/factories/profile1.png'),
-          filename: 'profile1.png', content_type: 'application/png')
+          user.profile_picture.attach(io: File.open('spec/factories/image1.jpg'),
+          filename: 'image1.jpg', content_type: 'application/jpg')
         end
         it '画像を変更できる' do
           visit edit_user_path(user)
 
-          expect(page).to have_css "img[src$='profile1.png']"
+          expect(page).to have_css "img[src$='image1.jpg']"
 
-          attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/profile2.png"
+          attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/image2.jpg"
 
           click_on 'Update User'
 
           expect(current_path).to eq user_path(user)
           expect(page).to have_css('div.alert')
           expect(page).to have_css 'img.profile_picture'
-          expect(page).to have_css "img[src$='profile2.png']"
+          expect(page).to have_css "img[src$='image2.jpg']"
         end
 
         it '画像を削除できる' do
@@ -271,14 +271,14 @@ RSpec.describe 'Users', type: :system do
         it '画像を設定できる' do
           visit edit_user_path(user)
 
-          attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/profile1.png"
+          attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/image1.jpg"
 
           click_on 'Update User'
 
           expect(current_path).to eq user_path(user)
           expect(page).to have_css('div.alert')
           expect(page).to have_css 'img.profile_picture'
-          expect(page).to have_css "img[src$='profile1.png']"
+          expect(page).to have_css "img[src$='image1.jpg']"
         end
       end
     end
