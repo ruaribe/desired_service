@@ -1,5 +1,6 @@
 class PostImage < ApplicationRecord
   belongs_to :post
+  acts_as_list scope: :post
 
   has_one_attached :data
 
