@@ -5,8 +5,8 @@
   </div>
   <div class="content">
     <%= post.content %>
-    <% post.images.each do |image| %>
-      <div class="images_item">
+    <% post.images.each.with_index(1) do |image, index| %>
+      <div class="images_item<%= index %>">
         <%= image_tag image.data.variant(resize: "500x>"),
                                          alt: image.alt_text%>
       </div>

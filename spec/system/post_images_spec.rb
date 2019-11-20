@@ -8,7 +8,7 @@ RSpec.describe "PostImages", type: :system do
   describe '画像投稿機能' do
     let(:user) { create(:testuser) }
     let!(:my_post) { create(:post, :sample, user: user) }
-    let!(:image) { create(:image, post: my_post) }
+    let!(:image1) { create(:image, post: my_post) }
 
     before do
       valid_login(user)
@@ -70,5 +70,20 @@ RSpec.describe "PostImages", type: :system do
 
       expect(page).to have_no_css "img[src$='image1.jpg']"
     end
+  end
+
+  describe '画像表示順変更機能' do
+    let(:iamge2) { create(:image, post: my_post) }
+    before do
+      valid_login(user)
+      visit user_path(user)
+
+      expect(page).to have_css "img[src$='image1.jpg']"
+      expect(page).to have_css "img[src$='image2.jpg']"
+      click_link '投稿の画像一覧'
+    end
+
+    it '画像を1つ前に移動させる'
+    it '画像を1つ後に移動させる'
   end
 end
