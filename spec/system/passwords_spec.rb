@@ -22,7 +22,7 @@ RSpec.describe "Passwords", type: :system do
       fill_in 'user_password', with: valid_password
       fill_in 'user_password_confirmation', with: valid_password
 
-      click_on 'Update User'
+      click_on '更新する'
 
       expect(user.reload.authenticate(valid_password)).to eq user
       expect(user.reload.authenticate(current_password)).to eq false
@@ -38,7 +38,7 @@ RSpec.describe "Passwords", type: :system do
       fill_in 'user_password', with: invalid_password
       fill_in 'user_password_confirmation', with: invalid_password
 
-      click_on 'Update User'
+      click_on '更新する'
 
       expect(user.reload.authenticate(invalid_password)).to eq false
       expect(user.reload.authenticate(current_password)).to eq user

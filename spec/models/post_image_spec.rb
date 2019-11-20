@@ -4,13 +4,16 @@ RSpec.describe PostImage, type: :model do
   describe 'validates' do
     let(:post) { create(:post, :sample) }
 
+
     context '新規作成の場合' do
       it '投稿と新しい画像があれば有効な状態であること' do
-        image = PostImage.new(
-          post: post,
-          new_data: Rack::Test::UploadedFile.new(Rails.root.join('spec', 'factories', 'image1.jpg'), 'image/jpeg')
-        )
-        expect(image).to be_valid
+        perform_enqueued_jobs do
+          image = PostImage.new(
+            post: post,
+            new_data: Rack::Test::UploadedFile.new(Rails.root.join('spec', 'factories', 'image1.jpg'), 'image/jpeg')
+          )
+          expect(image).to be_valid
+        end
       end
 
       it '投稿がなければ無効な状態であること' do
