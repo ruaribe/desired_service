@@ -14,15 +14,20 @@
 
 <% if @images.present? %>
 <div class='images'>
-  <% @images.each do |image| %>
-  <div class='image'>
+  <% @images.each.with_index(1) do |image, index| %>
+  <div class="images_item<%= index %>">
     <%= image_tag image.data.variant(resize: '100x>') , alt: image.alt_text %>
+    <div class='image_edit'>
+      <%= link_to '編集', edit_post_image_path(@post, image) %> |
+      <%= link_to '削除', post_image_path(@post, image), class: 'delete', method: :delete, data: { confirm: "本当に削除しますか？" } %>
+    </div>
+    <div>
+      <%= link_to '上へ', '#' %> |
+      <%= link_to '下へ', '#' %>
+    </div>
   </div>
 
-  <div class='image_edit'>
-      <%= link_to '編集', edit_post_image_path(@post, image) %> |
-      <%= link_to "削除", post_image_path(@post, image), class: 'delete', method: :delete, data: { confirm: "本当に削除しますか？" } %>
-  </div>
+  
 <% end %>
 </div>
 <% else %>
