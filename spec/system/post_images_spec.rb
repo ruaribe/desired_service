@@ -24,7 +24,7 @@ RSpec.describe "PostImages", type: :system do
       attach_file 'post_image_new_data', "#{Rails.root}/spec/factories/image2.jpg"
       fill_in 'post_image_alt_text', with: 'テスト'
 
-      click_on 'Create Post image'
+      click_on '登録する'
 
       expect(current_path).to eq post_images_path(my_post)
       expect(page).to have_css 'div.alert.alert-success', text: '画像を追加しました。'
@@ -43,7 +43,7 @@ RSpec.describe "PostImages", type: :system do
       attach_file 'post_image_new_data', "#{Rails.root}/spec/factories/image2.jpg"
       fill_in 'post_image_alt_text', with: 'テスト'
 
-      click_on 'Update Post image'
+      click_on '更新する'
 
       expect(current_path).to eq post_images_path(my_post)
       expect(page).to have_css 'div.alert.alert-success', text: '画像を更新しました。'

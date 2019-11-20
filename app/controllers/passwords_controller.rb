@@ -22,7 +22,7 @@ class PasswordsController < ApplicationController
           render 'edit'
         end
       else
-        @user.errors.add(:current_password)
+        @user.errors.add(:current_password, :wrong)
         render 'edit'
       end
     else

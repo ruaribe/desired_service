@@ -1,0 +1,27 @@
+ja:
+  activerecord:
+    models:
+      user: '会員'
+      post: '投稿'
+      post_image: '投稿画像'
+    attributes:
+      user:
+        new_profile_picture: 'プロフィール画像'
+        remove_profile_picture: 画像を削除
+        name: 'ユーザー名'
+        email: 'メールアドレス'
+        sex: '性別'
+        birthday: '生年月日'
+        adinistrator: '管理者'
+        current_password: 現在のパスワード
+        password: 新しいパスワード
+        password_confirmation: 新しいパスワードの確認
+      post:
+        content: '投稿内容'
+      post_image:
+        new_data: 画像ファイル
+        alt_text: 代替テキスト
+    errors:
+      messages:
+        wrong: が正しくありません。
+        invalid_image_type: にはJPEG、PNG、GIF、PNG形式の画像を指定してください。

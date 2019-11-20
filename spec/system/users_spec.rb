@@ -47,7 +47,6 @@ RSpec.describe 'Users', type: :system do
       it_behaves_like 'ユーザー名がリンクになっている一覧が表示される。'
       it_behaves_like 'リンクをクリックしたらそのユーザーの詳細ページへ移動する。'
 
-      
     end
 
     context '管理者ユーザーでログインしている場合' do
@@ -103,7 +102,7 @@ RSpec.describe 'Users', type: :system do
         select '9', from: 'user_birthday_2i'
         select '22', from: 'user_birthday_3i'
 
-        click_on 'Create User'
+        click_on '登録する'
 
         expect(current_path).to eq user_path(User.last)
         expect(page).to have_css('div.alert')
@@ -123,7 +122,7 @@ RSpec.describe 'Users', type: :system do
         select '9', from: 'user_birthday_2i'
         select '22', from: 'user_birthday_3i'
 
-        click_on 'Create User'
+        click_on '登録する'
 
         expect(page).to have_css('div#error_explanation')
 
@@ -195,7 +194,7 @@ RSpec.describe 'Users', type: :system do
         select '12', from: 'user_birthday_2i'
         select '28', from: 'user_birthday_3i'
 
-        click_on 'Update User'
+        click_on '更新する'
 
         expect(current_path).to eq user_path(user)
         expect(page).to have_css('div.alert')
@@ -218,7 +217,7 @@ RSpec.describe 'Users', type: :system do
         select '12', from: 'user_birthday_2i'
         select '28', from: 'user_birthday_3i'
 
-        click_on 'Update User'
+        click_on '更新する'
 
         expect(page).to have_css('div#error_explanation')
 
@@ -246,7 +245,7 @@ RSpec.describe 'Users', type: :system do
 
           attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/image2.jpg"
 
-          click_on 'Update User'
+          click_on '更新する'
 
           expect(current_path).to eq user_path(user)
           expect(page).to have_css('div.alert')
@@ -259,7 +258,7 @@ RSpec.describe 'Users', type: :system do
 
           check('user_remove_profile_picture')
 
-          click_on 'Update User'
+          click_on '更新する'
 
           expect(current_path).to eq user_path(user)
           expect(page).to have_css('div.alert')
@@ -273,7 +272,7 @@ RSpec.describe 'Users', type: :system do
 
           attach_file 'user_new_profile_picture', "#{Rails.root}/spec/factories/image1.jpg"
 
-          click_on 'Update User'
+          click_on '更新する'
 
           expect(current_path).to eq user_path(user)
           expect(page).to have_css('div.alert')
