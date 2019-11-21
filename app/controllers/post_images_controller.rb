@@ -53,4 +53,9 @@ class PostImagesController < ApplicationController
     params.require(:post_image).permit(:new_data, :alt_text)
   end
 
+  def sort
+    image = @post.images[params[:from].to_i]
+    image.insert_at(params[:to].to_i + 1)
+    head :ok
+  end
 end
