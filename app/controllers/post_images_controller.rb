@@ -52,4 +52,5 @@ class PostImagesController < ApplicationController
   private def image_params
     params.require(:post_image).permit(:new_data, :alt_text)
   end
+
 end
