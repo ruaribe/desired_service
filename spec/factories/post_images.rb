@@ -9,5 +9,9 @@ FactoryBot.define do
     trait :image2 do
       new_data { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'factories', 'image2.jpg'),'image/jpeg') }
     end
+
+    trait :image3 do
+      new_data { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'factories', 'image3.jpg'),'image/jpeg') }
+    end
   end
 end

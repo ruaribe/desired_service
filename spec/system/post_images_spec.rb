@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "PostImages", type: :system do
-  before do
-    driven_by(:rack_test)
-  end
 
   let(:user) { create(:testuser) }
   let!(:my_post) { create(:post, :sample, user: user) }
@@ -71,15 +68,18 @@ RSpec.describe "PostImages", type: :system do
     end
   end
 
-  describe '画像表示順変更機能', :focus do
+  describe '画像表示順変更機能' do
     let!(:iamge2) { create(:image, :image2, post: my_post) }
+    let!(:image3) { create(:image, :image3, post: my_post) }
+    let(:before_images_list) { all('ul#images li') }
+    let(:after_images_list) { all('ul#images li') }
 
     before do
       valid_login(user)
       visit user_path(user)
     end
 
-    it '画像が正しい位置に表示される' do
+    it 'ドラッグ&ドロップで画像位置を入替する', js: true do
       within '.images_item1' do
         expect(page).to have_css "img[src$='image1.jpg']"
       end
@@ -87,24 +87,29 @@ RSpec.describe "PostImages", type: :system do
       within '.images_item2' do
         expect(page).to have_css "img[src$='image2.jpg']"
       end
-    end
 
-    it 'image2を1つ前に移動させる' do
+      within '.images_item3' do
+        expect(page).to have_css "img[src$='image3.jpg']"
+      end
+
       click_link '投稿の画像一覧'
 
-      within '.images_item2' do
-        click_link '上へ'
-      end
+      visit post_images_path(my_post)
+
+      expect(before_images_list[0]).to have_css "img[src$='image1.jpg']"
+      expect(before_images_list[1]).to have_css "img[src$='image2.jpg']"
+      expect(before_images_list[2]).to have_css "img[src$='image3.jpg']"
+
+      source = page.find("img[src$='image1.jpg']")
+      target = page.find('.images_item3')
+
+      source.drag_to(target)
 
       expect(current_path).to eq post_images_path(my_post)
 
-      within '.images_item1' do
-        expect(page).to have_css "img[src$='image2.jpg']"
-      end
-
-      within '.images_item2' do
-        expect(page).to have_css "img[src$='image1.jpg']"
-      end
+      expect(after_images_list[0]).to have_css "img[src$='image2.jpg']"
+      expect(after_images_list[1]).to have_css "img[src$='image3.jpg']"
+      expect(after_images_list[2]).to have_css "img[src$='image1.jpg']"
 
       visit user_path(user)
 
@@ -113,37 +118,12 @@ RSpec.describe "PostImages", type: :system do
       end
 
       within '.images_item2' do
+        expect(page).to have_css "img[src$='image3.jpg']"
+      end
+
+      within '.images_item3' do
         expect(page).to have_css "img[src$='image1.jpg']"
       end
-
-    end
-    it 'image1を1つ後に移動させる' do
-      click_link '投稿の画像一覧'
-
-      within '.images_item1' do
-        click_link '下へ'
-      end
-
-      expect(current_path).to eq post_images_path(my_post)
-
-      within '.images_item1' do
-        expect(page).to have_css "img[src$='image2.jpg']"
-      end
-
-      within '.images_item2' do
-        expect(page).to have_css "img[src$='image1.jpg']"
-      end
-
-      visit user_path(user)
-
-      within '.images_item1' do
-        expect(page).to have_css "img[src$='image2.jpg']"
-      end
-
-      within '.images_item2' do
-        expect(page).to have_css "img[src$='image1.jpg']"
-      end
-
     end
   end
 end

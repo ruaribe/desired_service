@@ -17,10 +17,8 @@
   <% @images.each.with_index(1) do |image, index| %>
   <li class="images_item<%= index %>">
     <%= image_tag image.data.variant(resize: '100x>') , alt: image.alt_text %>
-    <div class='image_edit'>
-      <%= link_to '編集', edit_post_image_path(@post, image) %> |
-      <%= link_to '削除', post_image_path(@post, image), class: 'delete', method: :delete, data: { confirm: "本当に削除しますか？" } %>
-    </div>
+    <%= link_to '編集', edit_post_image_path(@post, image) %> |
+    <%= link_to '削除', post_image_path(@post, image), class: 'delete', method: :delete, data: { confirm: "本当に削除しますか？" } %>
   </li>
   <% end %>
   </ul>
